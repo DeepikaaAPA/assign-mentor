@@ -6,12 +6,6 @@ const cors = require("cors");
 
 // create an express application
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:5173/",
-    credentials: true,
-  })
-);
 
 // use the express middleware for parsing json data
 app.use(express.json());
@@ -19,4 +13,6 @@ app.use(express.json());
 // use the express middleware for logging
 app.use(requestLogger);
 
-app.use("/api/v1/todos", assignerRouter);
+app.use("/api/v1", assignerRouter);
+
+module.exports = app;

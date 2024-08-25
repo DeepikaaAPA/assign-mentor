@@ -1,4 +1,6 @@
+node_modules/
+package-lock.json
+.env
 sampledata.json
 sampledatagen.js
-/package-lock.json
-node-modules/
+package.json

@@ -1,14 +1,12 @@
 // create a router
 const express = require("express");
-const assignerController = require("../controllers/assignerController");
+const assignerController = require("../Controllers/assignerController");
+
 const assignerRouter = express.Router();
 
 // add routes to the router
-assignerRouter.post("/", assignerController.createassigner);
-assignerRouter.get("/", assignerController.getassigners);
-assignerRouter.get("/:id", assignerController.getassigner);
-assignerRouter.put("/:id", assignerController.updateassigner);
-assignerRouter.delete("/:id", assignerController.deleteassigner);
+
+assignerRouter.post("/createMentor", assignerController.createMentor);
 
 // export the router
 module.exports = assignerRouter;
