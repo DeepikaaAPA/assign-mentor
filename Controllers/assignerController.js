@@ -78,6 +78,20 @@ const assignerController = {
       response.status(400).json({ message: error.message });
     }
   },
+  assignStudents: async (request, response) => {
+    try {
+      const { mentor, students } = request.body;
+      await Mentor.updateOne(
+        { id: mentor },
+        { $addToSet: { students: { $each: students } } }
+      );
+      return response.status(200).json({
+        message: `${students.length} students added to ${mentor}`,
+      });
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = assignerController;
