@@ -8,5 +8,6 @@ const assignerRouter = express.Router();
 
 assignerRouter.post("/createMentor", assignerController.createMentor);
 
+assignerRouter.post("/createStudent", assignerController.createStudent);
 // export the router
 module.exports = assignerRouter;

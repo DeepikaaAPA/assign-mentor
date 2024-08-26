@@ -10,7 +10,7 @@ mongoose
 
     // start the server and listen on port 3001
     app.listen(PORT, () => {
-      console.log(`Server running on port:${PORT}`);
+      console.log(`Server listening on port:${PORT}`);
     });
   })
   .catch((error) => {
