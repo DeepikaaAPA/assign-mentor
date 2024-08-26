@@ -9,5 +9,7 @@ const assignerRouter = express.Router();
 assignerRouter.post("/createMentor", assignerController.createMentor);
 
 assignerRouter.post("/createStudent", assignerController.createStudent);
+
+assignerRouter.get("/getStudentstoAssign", assignerController.getStudentsToAssign);
 // export the router
 module.exports = assignerRouter;

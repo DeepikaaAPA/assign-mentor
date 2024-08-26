@@ -10,7 +10,7 @@ const assignerController = {
       if (mentor_id)
         return response.status(400).json({ message: "mentor exists already" });
 
-      const newMentor = new Mentor({ id, name, students: null });
+      const newMentor = new Mentor({ id, name});
       await newMentor.save();
 
       response.status(200).json({ message: `Created mentor ${id}` });
@@ -32,7 +32,18 @@ const assignerController = {
       });
       await newStudent.save();
 
-      response.status(200).json({ message: `Created student ${id}` });
+      return response.status(200).json({ message: `Created student ${id}` });
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+    }
+  },
+  getStudentsToAssign: async (request, response) => {
+    try {
+      const studentsToAssign = await Student.find(
+        { mentor: null },
+        { _id: 0, __v: 0 }
+      );
+      response.status(200).json({ studentsToAssign });
     } catch (error) {
       response.status(400).json({ message: error.message });
     }

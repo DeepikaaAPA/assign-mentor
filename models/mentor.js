@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const mentorSchema = new mongoose.Schema({
   id: String,
   name: String,
-  students: String,
+  students: { type: [String], default: [] },
 });
 
 // create a model and export it
