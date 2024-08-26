@@ -18,5 +18,7 @@ assignerRouter.get(
 assignerRouter.get("/getMentors", assignerController.getMentors);
 
 assignerRouter.put("/assignStudents", assignerController.assignStudents);
+
+assignerRouter.put("/assignMentor", assignerController.assignMentor);
 // export the router
 module.exports = assignerRouter;

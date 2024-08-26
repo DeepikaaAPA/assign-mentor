@@ -99,6 +99,19 @@ const assignerController = {
       response.status(400).json({ message: error.message });
     }
   },
+  assignMentor: async (request, response) => {
+    try {
+      const { student, mentor } = request.body;
+      await Student.updateOne(
+        { id: student },
+        { $set: { previous_mentor: "$mentor" } }
+      );
+      await Student.updateOne({ id: student }, { $set: { mentor } });
+      return response.send("success");
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = assignerController;
