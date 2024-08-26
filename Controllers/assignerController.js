@@ -102,12 +102,31 @@ const assignerController = {
   assignMentor: async (request, response) => {
     try {
       const { student, mentor } = request.body;
+      const studentDocument = await Student.findOne({ id: student });
+      const curr_mentor = studentDocument.mentor;
+      //set previous_mentor
       await Student.updateOne(
         { id: student },
-        { $set: { previous_mentor: "$mentor" } }
+        { $set: { previous_mentor: curr_mentor } }
       );
+      //update mentor in students collection
       await Student.updateOne({ id: student }, { $set: { mentor } });
-      return response.send("success");
+      //update in mentors collection
+      //1.add new student to the new mentor
+      await Mentor.updateOne(
+        { id: mentor },
+        { $addToSet: { students: student } }
+      );
+
+      //2. remove student from previous mentor
+      await Mentor.updateOne(
+        { id: curr_mentor },
+        { $pull: { students: student } }
+      );
+
+      return response.send(
+        `Assigned ${studentDocument.name}  to ${mentor} from  ${curr_mentor}`
+      );
     } catch (error) {
       response.status(400).json({ message: error.message });
     }
@@ -118,6 +137,18 @@ const assignerController = {
       const { name, students } = await Mentor.findOne({ id: mentor });
       console.log(students);
       return response.status(200).json({ mentor: name, students });
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+    }
+  },
+  getPreviousMentor: async (request, response) => {
+    try {
+      const { student } = request.body;
+      const { previous_mentor } = await Student.findOne(
+        { id: student },
+        { _id: 0, __v: 0 }
+      );
+      response.status(200).json({ student, previous_mentor });
     } catch (error) {
       response.status(400).json({ message: error.message });
     }
