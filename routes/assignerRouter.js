@@ -10,6 +10,11 @@ assignerRouter.post("/createMentor", assignerController.createMentor);
 
 assignerRouter.post("/createStudent", assignerController.createStudent);
 
-assignerRouter.get("/getStudentstoAssign", assignerController.getStudentsToAssign);
+assignerRouter.get(
+  "/getStudentstoAssign",
+  assignerController.getStudentsToAssign
+);
+
+assignerRouter.get("/getMentors", assignerController.getMentors);
 // export the router
 module.exports = assignerRouter;
