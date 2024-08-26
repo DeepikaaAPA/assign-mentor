@@ -81,9 +81,16 @@ const assignerController = {
   assignStudents: async (request, response) => {
     try {
       const { mentor, students } = request.body;
+
+      /*1. update mentors collection*/
       await Mentor.updateOne(
         { id: mentor },
         { $addToSet: { students: { $each: students } } }
+      );
+      /* 2. update students collection */
+      await Student.updateMany(
+        { id: { $in: students } },
+        { $set: { mentor: mentor } }
       );
       return response.status(200).json({
         message: `${students.length} students added to ${mentor}`,
