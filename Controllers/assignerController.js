@@ -112,6 +112,16 @@ const assignerController = {
       response.status(400).json({ message: error.message });
     }
   },
+  getMentees: async (request, response) => {
+    try {
+      const { mentor } = request.body;
+      const { name, students } = await Mentor.findOne({ id: mentor });
+      console.log(students);
+      return response.status(200).json({ mentor: name, students });
+    } catch (error) {
+      response.status(400).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = assignerController;
